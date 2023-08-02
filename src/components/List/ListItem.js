@@ -1,23 +1,24 @@
-import React from 'react';
+import {Component} from 'react';
 
-class ListItem extends React.Component {
+class ListItem extends Component {
 	render() {
+        const {task, onToggleDone, onToggleImportant, delTask} = this.props;
         let classNames = "todo-item";
 
-        if (this.props.task.important) {
+        if (task.important) {
             classNames += ' important';
         }
 
-        if (this.props.task.done) {
+        if (task.done) {
             classNames += ' done';
         }
 
 		return (
             <li className={classNames}>
-                <span onClick={() => this.props.onToggleDone(this.props.task.id)} className="todo-item-text" >{this.props.task.title}</span>
+                <span onClick={() => onToggleDone(task.id)} className="todo-item-text" >{task.title}</span>
                 <div className="btn-group">
-                    <button onClick={() => this.props.onToggleImportant(this.props.task.id)} role="button" className="btn btn-outline-dark btn-sm">Важное</button>
-                    <button onClick={() => this.props.delTask(this.props.task.id)} role="button" className="btn btn-outline-danger btn-sm">Удалить</button>
+                    <button onClick={() => onToggleImportant(task.id)} role="button" className="btn btn-outline-dark btn-sm">Важное</button>
+                    <button onClick={() => delTask(task.id)} role="button" className="btn btn-outline-danger btn-sm">Удалить</button>
                 </div>
             </li>);
 	}

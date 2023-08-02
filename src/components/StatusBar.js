@@ -1,5 +1,3 @@
-
-
 function StatusBar(props) {
     const btns = [
         {status: 'all', name: 'Все'},

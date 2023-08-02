@@ -1,4 +1,4 @@
-import React from 'react';
+import {Component} from 'react';
 
 import './App.css';
 
@@ -8,7 +8,7 @@ import Search from "../Search/Search";
 import Footer from "../Footer/Footer";
 import StatusBar from "../StatusBar";
 
-class App extends React.Component {
+class App extends Component {
     state = {
         todoData:  [
             { id: 0, title: 'Выпить кофе', important: false, done: false},
@@ -19,61 +19,38 @@ class App extends React.Component {
         status: 'all',
     }
 
-    onToggleImportant = (id) => {
+    toggleParam = (param, id) => {
         this.setState((state) => {
-            // находим индекс задачи
-            const index = state.todoData.findIndex((el) => el.id === id);
-
-            // формируем новый {}, но с обратным значением important
-            const oldItem = state.todoData[index];
-            const newItem = {...oldItem, important: !oldItem.important};
-
-            // формируем новый массив вставляя в него вместо старого новый {}
-            const part1 = state.todoData.slice(0, index);
-            const part2 = state.todoData.slice(index + 1);
-            const newArray = [...part1, newItem, ...part2];
-
-            return {
-                todoData: newArray
-            }
-        })
+            const newArray = state.todoData.map((task) => {
+                return {
+                    ...task,
+                    [param]: id === task.id ? !task[param] : task[param],
+                }
+            })
+ 
+            return {todoData: newArray}
+        })   
     }
 
-    onToggleDone = (id) => {
-        this.setState((state) => {
-            const index = state.todoData.findIndex((el) => el.id === id)
+    onToggleImportant = (id) => this.toggleParam('important', id);
 
-            const findTask = state.todoData[index];
-            const newTask = {...findTask, done: !findTask.done};
-
-            const part1 = state.todoData.slice(0, index);
-            const part2 = state.todoData.slice(index + 1);
-            const newArray = [...part1, newTask, ...part2];
-
-            return {
-                todoData: newArray
-            }
-        })
-    }
+    onToggleDone = (id) => this.toggleParam('done', id);
 
     delTask = (id) => {
         this.setState((state) => {
-            const index = state.todoData.findIndex((task) => task.id === id);
-    
-            const part1 = state.todoData.slice(0, index);
-            const part2 = state.todoData.slice(index + 1);
-    
-            const newArray = [...part1, ...part2]
-
             return {
-                todoData: newArray
+                todoData: state.todoData.filter((task) => task.id !== id)
             }
         })
     }
 
     addItem = (taskTitle) => {
         this.setState((state) => {
-            const ID = state.todoData[state.todoData.length - 1]['id'] + 1;
+            let ID = 0;
+            if (state.todoData.length > 0) {
+                const lastElement = state.todoData[state.todoData.length - 1];
+                ID = lastElement.id + 1;
+            }
             const newItem = {id: ID, title: taskTitle, important: false, done: false};
             const newArray = [...state.todoData, newItem];
             return {
