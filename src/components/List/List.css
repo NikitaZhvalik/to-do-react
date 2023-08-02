@@ -31,3 +31,17 @@
 .todo-item + .todo-item {
 	border-top-width: 0;
 }
+
+/* Important, done */
+
+.todo-item.important .todo-item-text {
+	font-weight: 700;
+}
+
+.todo-item.done .todo-item-text {
+	text-decoration: line-through;
+}
+
+.todo-item .todo-item-text {
+	cursor: pointer;
+}
