@@ -14,6 +14,7 @@ class App extends React.Component {
             { id: 1, title: 'Сделать React приложение', important: false, done: false},
             { id: 2, title: 'Позавтракать', important: false, done: false}
         ],
+        term: '',
     }
 
     onToggleImportant = (id) => {
@@ -79,17 +80,37 @@ class App extends React.Component {
         })
     }
 
+    search = (tasks, term) => {
+        if (term.trim().length === 0) {
+            return tasks
+        }
+
+        return tasks.filter((task) => {
+            if (task.title.toLowerCase().indexOf(term.toLowerCase().trim()) > -1) {
+                return true
+            }
+        })
+    }
+
+    changeTerm = (term) => {
+        this.setState({
+            term: term
+        })
+    }
+
     render() {
+        const visibleItems = this.search(this.state.todoData, this.state.term);
+
         return(
             <div>
             <Header />
             <List 
-            data={this.state.todoData} 
+            data={visibleItems} 
             onToggleImportant={this.onToggleImportant} 
             onToggleDone={this.onToggleDone} 
             delTask={this.delTask}
             />
-            <Search />
+            <Search changeTerm={this.changeTerm} term={this.state.term }/>
             <Footer addItem={this.addItem} />
             </div>
         )

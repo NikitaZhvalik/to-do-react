@@ -1,9 +1,11 @@
 import './Search.css';
 
-const Search = () => {
+const Search = (props) => {
     return (
             <div className="search">
                 <input
+                    value={props.term}
+                    onChange={(e) => props.changeTerm(e.target.value)}
                     type="text"
                     placeholder="введите фразу для поиска"
                     className="form-control me-2"
