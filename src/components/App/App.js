@@ -53,11 +53,31 @@ class App extends React.Component {
         })
     }
 
+    delTask = (id) => {
+        this.setState((state) => {
+            const index = state.todoData.findIndex((task) => task.id === id);
+    
+            const part1 = state.todoData.slice(0, index);
+            const part2 = state.todoData.slice(index + 1);
+    
+            const newArray = [...part1, ...part2]
+
+            return {
+                todoData: newArray,
+            }
+        })
+    }
+
     render() {
         return(
             <div>
             <Header />
-            <List data={this.state.todoData} onToggleImportant={this.onToggleImportant} onToggleDone={this.onToggleDone}/>
+            <List 
+            data={this.state.todoData} 
+            onToggleImportant={this.onToggleImportant} 
+            onToggleDone={this.onToggleDone} 
+            delTask={this.delTask}
+            />
             <Search />
             <Footer />
             </div>

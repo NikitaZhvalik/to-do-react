@@ -3,7 +3,13 @@ import ListItem from './ListItem';
 
 const List = (props) => {
             const render = props.data.map((task) => 
-                <ListItem onToggleDone={props.onToggleDone} onToggleImportant={props.onToggleImportant} key={task.id} task={task} />
+                <ListItem
+                 onToggleDone={props.onToggleDone} 
+                 onToggleImportant={props.onToggleImportant} 
+                 delTask={props.delTask}
+                 key={task.id} 
+                 task={task} 
+                />
             );
 
             const noTask = (
