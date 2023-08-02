@@ -1,15 +1,9 @@
 import './List.css';
 import ListItem from './ListItem';
 
-const List = () => {
-            const items = [
-                { id: 0, title: 'Выпить кофе' },
-                { id: 1, title: 'Сделать React приложение' },
-                { id: 2, title: 'Позавтракать' }
-            ];
-
-            const render = items.map((el) => 
-                <ListItem key={el.id} el={el} />
+const List = (props) => {
+            const render = props.data.map((task) => 
+                <ListItem key={task.id} task={task} />
             );
 
             const noTask = (
@@ -19,7 +13,7 @@ const List = () => {
             )
 
             return  (<ul>
-                        {items.length === 0 ? noTask : render}
+                        {props.data.length === 0 ? noTask : render}
                     </ul>);
 }
 
