@@ -31,7 +31,7 @@ class App extends React.Component {
             const newArray = [...part1, newItem, ...part2];
 
             return {
-                todoData: newArray,
+                todoData: newArray
             }
         })
     }
@@ -48,7 +48,7 @@ class App extends React.Component {
             const newArray = [...part1, newTask, ...part2];
 
             return {
-                todoData: newArray,
+                todoData: newArray
             }
         })
     }
@@ -63,7 +63,18 @@ class App extends React.Component {
             const newArray = [...part1, ...part2]
 
             return {
-                todoData: newArray,
+                todoData: newArray
+            }
+        })
+    }
+
+    addItem = (taskTitle) => {
+        this.setState((state) => {
+            const ID = state.todoData[state.todoData.length - 1]['id'] + 1;
+            const newItem = {id: ID, title: taskTitle, important: false, done: false};
+            const newArray = [...state.todoData, newItem];
+            return {
+                todoData: newArray
             }
         })
     }
@@ -79,7 +90,7 @@ class App extends React.Component {
             delTask={this.delTask}
             />
             <Search />
-            <Footer />
+            <Footer addItem={this.addItem} />
             </div>
         )
     }
